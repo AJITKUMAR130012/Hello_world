@@ -1,0 +1,48 @@
+https://practice.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1
+
+
+
+string smallestWindow (string s, string p)
+    {
+        // Your code here
+        unordered_map<char,int> m;
+        int j=0,i=0,l=p.length(),n=s.length(),x1,x2,ans=INT_MAX;
+        if(l>n) return "-1";
+        while(i<l)
+        {
+            m[p[i]]++;
+            i++;
+        }
+        int cn=m.size();
+     //   cout<<cn<<endl;
+        i=0;
+        while(j<n)
+        {
+            if(m.find(s[j])!=m.end())
+            {
+                m[s[j]]--;
+                if(m[s[j]]==0) cn--;
+            }
+            while(cn==0)
+            {
+                if(ans>j-i+1)
+                {
+                    ans=j-i+1;
+                    x1=i;
+                }
+                if(m.find(s[i])!=m.end())
+                {
+                    m[s[i]]++;
+                    if(m[s[i]]>0) cn++;
+                    
+                }
+                i++;
+            }
+            j++;
+        }
+        if(ans!=INT_MAX) return s.substr(x1,ans);
+        else return "-1";
+      
+    }
+        
+        
